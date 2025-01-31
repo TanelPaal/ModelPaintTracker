@@ -1,4 +1,4 @@
-**# Paint & Model Inventory Management System - Project Overview**
+**# WIP Paint & Model Inventory Management System - Project Overview**
 
 ## **1. Project Summary**
 The **Paint & Model Inventory Management System** is a **Razor Pages Web App** designed to help users manage their collection of **paints and models** for tabletop gaming (e.g., Warhammer, D&D miniatures). The system enables users to **store, track, and organize** paints, link paints to models, and categorize miniatures by faction and painting progress.
