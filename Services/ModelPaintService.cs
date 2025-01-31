@@ -10,6 +10,7 @@ public interface IModelPaintService : IBaseService<ModelPaint>
     Task<bool> ExistsAsync(int modelId, int paintId);
     Task DeleteAsync(int modelId, int paintId);
     Task<IEnumerable<ModelPaint>> GetByModelIdWithDetailsAsync(int modelId);
+    Task<ModelPaint?> GetByModelAndPaintIdAsync(int modelId, int paintId);
 }
 
 public class ModelPaintService : BaseService<ModelPaint>, IModelPaintService
@@ -64,5 +65,14 @@ public class ModelPaintService : BaseService<ModelPaint>, IModelPaintService
                 .ThenInclude(p => p!.PaintType)
             .Where(mp => mp.ModelID == modelId)
             .ToListAsync();
+    }
+
+    public async Task<ModelPaint?> GetByModelAndPaintIdAsync(int modelId, int paintId)
+    {
+        return await _context.ModelPaints
+            .Include(mp => mp.Paint)
+                .ThenInclude(p => p!.Brand)
+            .Include(mp => mp.Model)
+            .FirstOrDefaultAsync(mp => mp.ModelID == modelId && mp.PaintID == paintId);
     }
 }

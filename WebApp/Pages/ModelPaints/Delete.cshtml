@@ -1,15 +1,44 @@
-<dl class="row">
-    <dt class="col-sm-2">Paint Name</dt>
-    <dd class="col-sm-10">@Model.ModelPaint?.Paint?.PaintName</dd>
+@page "{modelId:int}/{paintId:int}"
+@model WebApp.Pages.ModelPaints.DeleteModel
+@{
+    ViewData["Title"] = "Remove Paint from Model";
+}
 
-    <dt class="col-sm-2">Brand</dt>
-    <dd class="col-sm-10">@Model.ModelPaint?.Paint?.Brand?.BrandName</dd>
+<div class="container">
+    <h1>Remove Paint from Model</h1>
 
-    <dt class="col-sm-2">Color</dt>
-    <dd class="col-sm-10">
-        <div class="d-flex align-items-center">
-            <div style="width: 25px; height: 25px; background-color: @Model.ModelPaint?.Paint?.HexCode; border: 1px solid #ddd; margin-right: 10px;"></div>
-            @Model.ModelPaint?.Paint?.HexCode
+    <div class="alert alert-warning">
+        <h3>Are you sure you want to remove this paint from the model?</h3>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Model?.ModelName</h5>
+            <dl class="row">
+                <dt class="col-sm-2">Paint Name</dt>
+                <dd class="col-sm-10">@Model.Paint?.PaintName</dd>
+
+                <dt class="col-sm-2">Brand</dt>
+                <dd class="col-sm-10">@Model.Paint?.Brand?.BrandName</dd>
+
+                <dt class="col-sm-2">Color</dt>
+                <dd class="col-sm-10">
+                    <div class="d-flex align-items-center">
+                        <div style="width: 25px; height: 25px; background-color: @Model.Paint?.HexCode; border: 1px solid #ddd; margin-right: 10px;"></div>
+                        @Model.Paint?.HexCode
+                    </div>
+                </dd>
+
+                <dt class="col-sm-2">Usage Type</dt>
+                <dd class="col-sm-10">@Model.ModelPaint?.UsageType</dd>
+            </dl>
         </div>
-    </dd>
-</dl> 
+    </div>
+
+    <form method="post">
+        <input type="hidden" asp-for="ModelId" />
+        <input type="hidden" asp-for="PaintId" />
+        <a asp-page="Index" asp-route-modelId="@Model.ModelId" class="btn btn-secondary">Back to List</a>
+        <button type="submit" class="btn btn-danger">Remove Paint</button>
+    </form>
+</div> 
