@@ -1,0 +1,15 @@
+<dl class="row">
+    <dt class="col-sm-2">Paint Name</dt>
+    <dd class="col-sm-10">@Model.ModelPaint?.Paint?.PaintName</dd>
+
+    <dt class="col-sm-2">Brand</dt>
+    <dd class="col-sm-10">@Model.ModelPaint?.Paint?.Brand?.BrandName</dd>
+
+    <dt class="col-sm-2">Color</dt>
+    <dd class="col-sm-10">
+        <div class="d-flex align-items-center">
+            <div style="width: 25px; height: 25px; background-color: @Model.ModelPaint?.Paint?.HexCode; border: 1px solid #ddd; margin-right: 10px;"></div>
+            @Model.ModelPaint?.Paint?.HexCode
+        </div>
+    </dd>
+</dl> 

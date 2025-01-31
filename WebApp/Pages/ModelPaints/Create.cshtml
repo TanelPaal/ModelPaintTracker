@@ -1,0 +1,34 @@
+@page "{modelId:int}"
+@model WebApp.Pages.ModelPaints.CreateModel
+@{
+    ViewData["Title"] = $"Add Paint to {Model.Model.ModelName}";
+}
+
+<div class="container">
+    <h1>Add Paint to @Model.Model.ModelName</h1>
+
+    <form method="post">
+        <input type="hidden" asp-for="ModelPaint.ModelID" />
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="ModelPaint.PaintID" class="form-label">Paint</label>
+                    <select asp-for="ModelPaint.PaintID" class="form-select" asp-items="Model.PaintList">
+                        <option value="">Select Paint</option>
+                    </select>
+                    <span asp-validation-for="ModelPaint.PaintID" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <a asp-page="Index" asp-route-modelId="@Model.Model.ModelID" class="btn btn-secondary">Back to List</a>
+                    <button type="submit" class="btn btn-primary">Add Paint</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

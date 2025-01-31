@@ -1,0 +1,67 @@
+@page "{modelId:int}"
+@model WebApp.Pages.ModelPaints.IndexModel
+@{
+    ViewData["Title"] = $"Paints for {Model.Model?.ModelName}";
+}
+
+<div class="container">
+    <h1>Paints for @Model.Model?.ModelName</h1>
+    <p>
+        @if (Model.Model?.Faction != null)
+        {
+            <strong>Faction:</strong> @Model.Model.Faction.FactionName
+        }
+        @if (Model.Model?.State != null)
+        {
+            <strong>State:</strong> @Model.Model.State.StateName
+        }
+    </p>
+
+    <div class="mb-3">
+        <a asp-page="Create" asp-route-modelId="@Model.Model?.ModelID" class="btn btn-primary">Add Paint</a>
+        <a asp-page="/Models/Index" class="btn btn-secondary">Back to Models</a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Paint Name</th>
+                    <th>Brand</th>
+                    <th>Color</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var modelPaint in Model.ModelPaints)
+                {
+                    <tr>
+                        <td>@modelPaint.Paint?.PaintName</td>
+                        <td>@modelPaint.Paint?.Brand?.BrandName</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div style="width: 25px; height: 25px; background-color: @modelPaint.Paint?.HexCode; border: 1px solid #ddd; margin-right: 10px;"></div>
+                                @modelPaint.Paint?.HexCode
+                            </div>
+                        </td>
+                        <td>
+                            <form method="post" asp-page="Delete" asp-route-modelId="@Model.Model?.ModelID" asp-route-paintId="@modelPaint.PaintID" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div> 

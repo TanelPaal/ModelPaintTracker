@@ -1,0 +1,37 @@
+@page "{id:int}"
+@model WebApp.Pages.Paints.DeleteModel
+@{
+    ViewData["Title"] = "Delete Paint";
+}
+
+<div class="container">
+    <h1>Delete Paint</h1>
+
+    <div class="alert alert-danger">
+        <h3>Are you sure you want to delete this paint?</h3>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Paint?.PaintName</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Brand:</strong> @Model.Paint?.Brand?.BrandName</p>
+                    <p><strong>Type:</strong> @Model.Paint?.PaintType?.TypeName</p>
+                    <p><strong>Quantity:</strong> @Model.Paint?.PaintQuantity</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Color:</strong></p>
+                    <div style="width: 50px; height: 50px; background-color: @Model.Paint?.HexCode; border: 1px solid #ddd;"></div>
+                    <p class="mt-2">@Model.Paint?.HexCode</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form method="post">
+        <input type="hidden" asp-for="Paint.PaintID" />
+        <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+</div> 

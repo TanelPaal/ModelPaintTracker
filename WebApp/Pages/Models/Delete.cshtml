@@ -1,0 +1,39 @@
+@page "{id:int}"
+@model WebApp.Pages.Models.DeleteModel
+@{
+    ViewData["Title"] = "Delete Model";
+}
+
+<div class="container">
+    <h1>Delete Model</h1>
+
+    <div class="alert alert-danger">
+        <h3>Are you sure you want to delete this model?</h3>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Model.ModelName</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    @if (Model.Model?.Faction != null)
+                    {
+                        <p><strong>Faction:</strong> @Model.Model.Faction.FactionName</p>
+                    }
+                    @if (Model.Model?.State != null)
+                    {
+                        <p><strong>State:</strong> @Model.Model.State.StateName</p>
+                    }
+                    <p><strong>Quantity:</strong> @Model.Model!.ModelQuantity
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form method="post">
+        <input type="hidden" asp-for="Model.ModelID" />
+        <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+</div> 

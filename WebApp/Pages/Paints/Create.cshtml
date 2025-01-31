@@ -1,0 +1,52 @@
+@page
+@model WebApp.Pages.Paints.CreateModel
+@{
+    ViewData["Title"] = "Add New Paint";
+}
+
+<h4>Create New Paint</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="Paint.PaintName" class="control-label"></label>
+                <input asp-for="Paint.PaintName" class="form-control" />
+                <span asp-validation-for="Paint.PaintName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Paint.BrandID" class="control-label">Brand</label>
+                <select asp-for="Paint.BrandID" class="form-control" asp-items="Model.BrandList">
+                    <option value="">-- Select Brand --</option>
+                </select>
+                <span asp-validation-for="Paint.BrandID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Paint.PaintTypeID" class="control-label">Paint Type</label>
+                <select asp-for="Paint.PaintTypeID" class="form-control" asp-items="Model.PaintTypeList">
+                    <option value="">-- Select Paint Type --</option>
+                </select>
+                <span asp-validation-for="Paint.PaintTypeID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Paint.PaintQuantity" class="control-label">Quantity</label>
+                <input asp-for="Paint.PaintQuantity" class="form-control" type="number" min="0" value="0" />
+                <span asp-validation-for="Paint.PaintQuantity" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

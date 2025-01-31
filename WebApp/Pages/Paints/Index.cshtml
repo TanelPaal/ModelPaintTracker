@@ -1,0 +1,57 @@
+@page
+@model WebApp.Pages.Paints.IndexModel
+@{
+    ViewData["Title"] = "Paints";
+}
+
+<div class="container">
+    <h1>Paint Collection</h1>
+    
+    <div class="mb-3">
+        <a asp-page="Create" class="btn btn-primary">Add New Paint</a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Color</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var paint in Model.Paints)
+                {
+                    <tr>
+                        <td>@paint.PaintName</td>
+                        <td>@paint.Brand?.BrandName</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div style="width: 25px; height: 25px; background-color: @paint.HexCode; border: 1px solid #ddd; margin-right: 10px;"></div>
+                                @paint.HexCode
+                            </div>
+                        </td>
+                        <td>@paint.PaintQuantity</td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@paint.PaintID" class="btn btn-sm btn-primary">Edit</a>
+                            <a asp-page="./Delete" asp-route-id="@paint.PaintID" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div> 
