@@ -54,6 +54,8 @@ public class CreateModel : BasePageModel
 
         try
         {
+            Paint.UserID = 1;
+            _logger.LogInformation("Creating paint: {@Paint}", Paint);
             await _paintService.CreateAsync(Paint);
             SetSuccessMessage("Paint created successfully!");
             return RedirectToPage("./Index");

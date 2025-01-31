@@ -46,5 +46,10 @@ namespace Services
                 await _context.SaveChangesAsync();
             }
         }
+
+        public virtual async Task<bool> ExistsAsync(int id)
+        {
+            return await _context.Set<T>().FindAsync(id) != null;
+        }
     }
 } 
