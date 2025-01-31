@@ -77,12 +77,12 @@ The **Paint & Model Inventory Management System** is a **Razor Pages Web App** d
 ✅ Configure **Entity Framework Core** with SQLite.  
 ✅ Implement **relationships** (foreign keys, constraints).  
 ✅ Implement **CRUD operations** for Paints & Models.  
-✅ Implement **User authentication**.
+🔹 Implement **User authentication**.
 
 ### **Phase 2: Paint & Model Management**
-✅ Implement Paint & Model **CRUD features**.  
-✅ Add **quantity tracking** for paints and models.  
-✅ Implement **paint-to-model linking**.
+🔹 Implement Paint & Model **CRUD features**.  
+🔹 Add **quantity tracking** for paints and models.  
+🔹 Implement **paint-to-model linking**.
 
 ### **Phase 3: Advanced Features**
 🔹 **Search & Filtering**: Find paints/models easily.  
@@ -111,15 +111,13 @@ Each entity will have **CRUD Pages**:
 ---
 
 ## **8. Next Steps**
-1️⃣ **Set Up Razor Pages Project** in .NET Core.  
-2️⃣ **Generate Database & Apply Migrations**.  
-3️⃣ **Build CRUD Functionality for Paints & Models**.  
-4️⃣ **Implement Authentication & User-Based Data Isolation**.  
-5️⃣ **Enhance UI & User Experience**.
+1️⃣ **Build CRUD Functionality for Paints & Models**.   
+2️⃣ **Implement Authentication & User-Based Data Isolation**.
+3️⃣ **Enhance UI & User Experience**.
+4️⃣ **TBD**.
+5️⃣ **TBD**.
 
 ---
 
 ## 🎯 **Final Thoughts**
-This project will serve as a **personalized tabletop paint & model tracker**, making it easier to manage collections. It will start as a **Razor Pages Web App** and can expand with **REST APIs or mobile support** in the future.
-
-Would you like to include a starter `dotnet` setup guide as well? 🚀
+This project will serve as a **personalized tabletop paint & model tracker**, making it easier to manage collections. It will start as a **Razor Pages Web App** and can be expanded later on.
