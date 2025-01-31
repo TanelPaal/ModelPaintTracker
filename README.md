@@ -114,8 +114,6 @@ Each entity will have **CRUD Pages**:
 1️⃣ **Build CRUD Functionality for Paints & Models**.   
 2️⃣ **Implement Authentication & User-Based Data Isolation**.
 3️⃣ **Enhance UI & User Experience**.
-4️⃣ **TBD**.
-5️⃣ **TBD**.
 
 ---
 
