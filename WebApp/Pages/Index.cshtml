@@ -1,10 +1,56 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <div class="px-4 py-5 my-5 text-center">
+        <h1 class="display-4 fw-bold text-body-emphasis">Paint & Model Tracker</h1>
+        <div class="col-lg-6 mx-auto">
+            <p class="lead mb-4">
+                Track your miniature painting collection and keep records of which paints you used on each model.
+            </p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="/Paints" class="btn btn-primary btn-lg px-4 gap-3">
+                    <i class="bi bi-palette"></i> Manage Paints
+                </a>
+                <a href="/Models" class="btn btn-outline-primary btn-lg px-4">
+                    <i class="bi bi-collection"></i> View Models
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 py-5">
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <i class="bi bi-palette text-primary"></i> Paint Management
+                    </h3>
+                    <p class="card-text">
+                        Keep track of your paint collection. Store details about brands, colors, and quantities.
+                        Never lose track of your paints again!
+                    </p>
+                    <a href="/Paints" class="btn btn-sm btn-outline-primary">Manage Paints</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <i class="bi bi-collection text-primary"></i> Model Tracking
+                    </h3>
+                    <p class="card-text">
+                        Organize your miniature collection by factions and track their painting progress.
+                        Keep a clear overview of your hobby projects.
+                    </p>
+                    <a href="/Models" class="btn btn-sm btn-outline-primary">View Models</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

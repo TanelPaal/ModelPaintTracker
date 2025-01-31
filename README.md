@@ -68,9 +68,9 @@ The **Paint & Model Inventory Management System** is a **Razor Pages Web App** d
 ✅ Implement **CRUD operations** for Paints & Models.  
 
 ### **Phase 2: Paint & Model Management**
-🔹 Implement Paint & Model **CRUD features**.  
-🔹 Add **quantity tracking** for paints and models.  
-🔹 Implement **paint-to-model linking**.
+✅ Implement Paint & Model **CRUD features**.  
+✅ Add **quantity tracking** for paints and models.  
+✅ Implement **paint-to-model linking**.
 
 ### **Phase 3: Advanced Features**
 🔹 **Search & Filtering**: Find paints/models easily.  
@@ -99,9 +99,19 @@ Each entity will have **CRUD Pages**:
 ---
 
 ## 8. Next Steps
-1️⃣ **Build CRUD Functionality for Paints & Models**.   
-2️⃣ **Implement Paint-to-Model Linking**.
-3️⃣ **Enhance UI & User Experience**.
+1️⃣ **Enhance Search & Filtering**
+   - Add search by paint name/brand
+   - Filter models by faction/state
+   - Sort paints by quantity
+
+2️⃣ **Improve Paint Management**
+   - Add low quantity warnings
+   - Track paint usage history
+   - Batch update paint quantities
+
+3️⃣ **UI/UX Improvements**
+   - Add color swatches for paint selection
+   - Add paint usage statistics dashboard
 
 ---
 
