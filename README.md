@@ -1,4 +1,4 @@
-**# WIP Paint & Model Inventory Management System - Project Overview**
+﻿**# WIP Paint & Model Inventory Management System - Project Overview**
 
 ## **1. Project Summary**
 The **Paint & Model Inventory Management System** is a **Razor Pages Web App** designed to help users manage their collection of **paints and models** for tabletop gaming (e.g., Warhammer, D&D miniatures). The system enables users to **store, track, and organize** paints, link paints to models, and categorize miniatures by faction and painting progress.
@@ -55,19 +55,19 @@ The **Paint & Model Inventory Management System** is a **Razor Pages Web App** d
 ## **5. Suggested Constraints**
 ### **Database Constraints for Data Integrity**
 - **User Table**
-    - `Username` and `Email` should be **unique**.
-    - `Password` should be **hashed**.
+  - `Username` and `Email` should be **unique**.
+  - `Password` should be **hashed**.
 - **Paints Table**
-    - `PaintQuantity` should have a `CHECK (PaintQuantity >= 0)` constraint to prevent negative values.
-    - `HexCode` should be validated using a `CHECK (HexCode LIKE '#______')` for correct HEX format.
+  - `PaintQuantity` should have a `CHECK (PaintQuantity >= 0)` constraint to prevent negative values.
+  - `HexCode` should be validated using a `CHECK (HexCode LIKE '#______')` for correct HEX format.
 - **Models Table**
-    - `ModelQuantity` should have a `CHECK (ModelQuantity >= 0)` constraint.
+  - `ModelQuantity` should have a `CHECK (ModelQuantity >= 0)` constraint.
 - **ModelPaints Table**
-    - `ModelID` and `PaintID` should have a **composite unique constraint** to prevent duplicate entries.
-    - `UsageType` should be constrained to predefined values like ('Base Coat', 'Highlight', 'Wash').
+  - `ModelID` and `PaintID` should have a **composite unique constraint** to prevent duplicate entries.
+  - `UsageType` should be constrained to predefined values like ('Base Coat', 'Highlight', 'Wash').
 - **Foreign Keys**
-    - `ON DELETE CASCADE` should be applied for dependent entities when a user deletes an account.
-    - `ON DELETE SET NULL` can be used for `ModelPaints` to preserve paint history if a paint is removed.
+  - `ON DELETE CASCADE` should be applied for dependent entities when a user deletes an account.
+  - `ON DELETE SET NULL` can be used for `ModelPaints` to preserve paint history if a paint is removed.
 
 ---
 
@@ -95,18 +95,18 @@ The **Paint & Model Inventory Management System** is a **Razor Pages Web App** d
 ## **7. Razor Pages Implementation**
 Each entity will have **CRUD Pages**:
 - **Paints**
-    - `/Paints/Index.cshtml` → List all paints.
-    - `/Paints/Create.cshtml` → Add new paint.
-    - `/Paints/Edit.cshtml` → Edit paint details.
-    - `/Paints/Delete.cshtml` → Delete paint.
+  - `/Paints/Index.cshtml` → List all paints.
+  - `/Paints/Create.cshtml` → Add new paint.
+  - `/Paints/Edit.cshtml` → Edit paint details.
+  - `/Paints/Delete.cshtml` → Delete paint.
 - **Models**
-    - `/Models/Index.cshtml` → List all models.
-    - `/Models/Create.cshtml` → Add a new model.
-    - `/Models/Edit.cshtml` → Edit a model.
-    - `/Models/Delete.cshtml` → Remove a model.
+  - `/Models/Index.cshtml` → List all models.
+  - `/Models/Create.cshtml` → Add a new model.
+  - `/Models/Edit.cshtml` → Edit a model.
+  - `/Models/Delete.cshtml` → Remove a model.
 - **Model-Paint Relationship**
-    - `/ModelPaints/Index.cshtml` → Show paints used on models.
-    - `/ModelPaints/Create.cshtml` → Add paint to model.
+  - `/ModelPaints/Index.cshtml` → Show paints used on models.
+  - `/ModelPaints/Create.cshtml` → Add paint to model.
 
 ---
 

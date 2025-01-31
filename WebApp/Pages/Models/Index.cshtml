@@ -30,27 +30,25 @@
                     <th>Faction</th>
                     <th>State</th>
                     <th>Quantity</th>
+                    <th>Paints Used</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Models)
+                @foreach (var miniature in Model.Models)
                 {
                     <tr>
-                        <td>@item.ModelName</td>
-                        @if (item.Faction != null)
-                        {
-                            <td>@item.Faction.FactionName</td>
-                        }
-                        @if (item.State != null)
-                        {
-                            <td>@item.State.StateName</td>
-                        }
-                        <td>@item.ModelQuantity</td>
+                        <td>@miniature.ModelName</td>
+                        <td>@miniature.Faction?.FactionName</td>
+                        <td>@miniature.State?.StateName</td>
+                        <td>@miniature.ModelQuantity</td>
                         <td>
-                            <a asp-page="./Edit" asp-route-id="@item.ModelID" class="btn btn-sm btn-primary">Edit</a>
-                            <a asp-page="./Delete" asp-route-id="@item.ModelID" class="btn btn-sm btn-danger">Delete</a>
-                            <a asp-page="/ModelPaints/Index" asp-route-modelId="@item.ModelID" class="btn btn-sm btn-info">Paints</a>
+                            <a asp-page="/ModelPaints/Index" asp-route-modelId="@miniature.ModelID" 
+                               class="btn btn-sm btn-info">View Paints</a>
+                        </td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@miniature.ModelID" class="btn btn-sm btn-primary">Edit</a>
+                            <a asp-page="./Delete" asp-route-id="@miniature.ModelID" class="btn btn-sm btn-danger">Delete</a>
                         </td>
                     </tr>
                 }

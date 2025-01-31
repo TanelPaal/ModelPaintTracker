@@ -28,32 +28,27 @@ public class CreateModel : BasePageModel
         _paintService = paintService;
     }
 
-    public async Task<IActionResult> OnGetAsync(int? modelId)
+    public async Task<IActionResult> OnGetAsync(int modelId)
     {
-        if (modelId == null)
-        {
-            return NotFound();
-        }
-
-        var model = await _modelService.GetByIdAsync(modelId.Value);
+        var model = await _modelService.GetByIdAsync(modelId);
         if (model == null)
         {
             return NotFound();
         }
 
         Model = model;
-        ModelPaint = new ModelPaint { ModelID = modelId.Value };
+        ModelPaint = new ModelPaint { ModelID = modelId };
         
         // Get all paints not already associated with this model
-        var existingPaints = await _modelPaintService.GetByModelIdAsync(modelId.Value);
-        var allPaints = await _paintService.GetAllAsync();
+        var existingPaints = await _modelPaintService.GetByModelIdAsync(modelId);
+        var allPaints = await _paintService.GetAllWithDetailsAsync();
         
         var availablePaints = allPaints
             .Where(p => !existingPaints.Any(ep => ep.PaintID == p.PaintID))
             .Select(p => new 
             {
                 p.PaintID,
-                PaintName = p.PaintName + " (" + p.Brand?.BrandName + ")"
+                PaintName = $"{p.PaintName} ({p.Brand?.BrandName})"
             });
         
         PaintList = new SelectList(
@@ -67,8 +62,16 @@ public class CreateModel : BasePageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
+        _logger.LogInformation("OnPostAsync called with ModelPaint: ModelID={ModelID}, PaintID={PaintID}", 
+            ModelPaint.ModelID, ModelPaint.PaintID);
+
         if (!ModelState.IsValid)
         {
+            var errors = string.Join("; ", ModelState.Values
+                .SelectMany(v => v.Errors)
+                .Select(e => e.ErrorMessage));
+            _logger.LogWarning("ModelState is invalid: {Errors}", errors);
+            
             var model = await _modelService.GetByIdAsync(ModelPaint.ModelID);
             if (model == null)
             {
@@ -79,8 +82,14 @@ public class CreateModel : BasePageModel
             
             // Repopulate the select list
             var existingPaints = await _modelPaintService.GetByModelIdAsync(ModelPaint.ModelID);
-            var allPaints = await _paintService.GetAllAsync();
-            var availablePaints = allPaints.Where(p => !existingPaints.Any(ep => ep.PaintID == p.PaintID));
+            var allPaints = await _paintService.GetAllWithDetailsAsync();
+            var availablePaints = allPaints
+                .Where(p => !existingPaints.Any(ep => ep.PaintID == p.PaintID))
+                .Select(p => new 
+                {
+                    p.PaintID,
+                    PaintName = $"{p.PaintName} ({p.Brand?.BrandName})"
+                });
             
             PaintList = new SelectList(
                 availablePaints,
@@ -93,27 +102,27 @@ public class CreateModel : BasePageModel
 
         try
         {
+            // Check if this paint is already linked to the model
+            if (await _modelPaintService.ExistsAsync(ModelPaint.ModelID, ModelPaint.PaintID))
+            {
+                SetErrorMessage("This paint is already added to the model.");
+                return RedirectToPage("./Index", new { modelId = ModelPaint.ModelID });
+            }
+
+            _logger.LogInformation("Creating ModelPaint: ModelID={ModelID}, PaintID={PaintID}", 
+                ModelPaint.ModelID, ModelPaint.PaintID);
+            
             await _modelPaintService.CreateAsync(ModelPaint);
+            
             SetSuccessMessage("Paint added to model successfully!");
             return RedirectToPage("./Index", new { modelId = ModelPaint.ModelID });
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error adding paint to model");
+            _logger.LogError(ex, "Error adding paint to model: ModelID={ModelID}, PaintID={PaintID}", 
+                ModelPaint.ModelID, ModelPaint.PaintID);
             SetErrorMessage("Error adding paint to model. Please try again.");
-            
-            // Repopulate the select list in case of an error
-            var existingPaints = await _modelPaintService.GetByModelIdAsync(ModelPaint.ModelID);
-            var allPaints = await _paintService.GetAllAsync();
-            var availablePaints = allPaints.Where(p => !existingPaints.Any(ep => ep.PaintID == p.PaintID));
-            
-            PaintList = new SelectList(
-                availablePaints,
-                "PaintID",
-                "PaintName"
-            );
-            
-            return Page();
+            return RedirectToPage("./Index", new { modelId = ModelPaint.ModelID });
         }
     }
 } 

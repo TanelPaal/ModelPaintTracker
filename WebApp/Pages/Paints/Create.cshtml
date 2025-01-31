@@ -4,55 +4,68 @@
     ViewData["Title"] = "Add New Paint";
 }
 
-<h4>Create New Paint</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
-            <div class="form-group">
-                <label asp-for="Paint.PaintName" class="control-label"></label>
-                <input asp-for="Paint.PaintName" class="form-control" />
-                <span asp-validation-for="Paint.PaintName" class="text-danger"></span>
-            </div>
-            
-            <div class="form-group">
-                <label asp-for="Paint.HexCode" class="control-label"></label>
-                <input asp-for="Paint.HexCode" class="form-control" />
-                <span asp-validation-for="Paint.HexCode" class="text-danger"></span>
-            </div>
+<div class="container">
+    <h1>Create New Paint</h1>
+    <hr />
+    
+    <form method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="Paint.PaintName" class="form-label">Paint Name</label>
+                    <input asp-for="Paint.PaintName" class="form-control" />
+                    <span asp-validation-for="Paint.PaintName" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="Paint.BrandID" class="control-label">Brand</label>
-                <select asp-for="Paint.BrandID" class="form-control" asp-items="Model.BrandList">
-                    <option value="">-- Select Brand --</option>
-                </select>
-                <span asp-validation-for="Paint.BrandID" class="text-danger"></span>
-            </div>
+                <div class="mb-3">
+                    <label asp-for="Paint.BrandID" class="form-label">Brand</label>
+                    <select asp-for="Paint.BrandID" class="form-select" asp-items="Model.BrandList">
+                        <option value="">Select Brand</option>
+                    </select>
+                    <span asp-validation-for="Paint.BrandID" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="Paint.PaintTypeID" class="control-label">Paint Type</label>
-                <select asp-for="Paint.PaintTypeID" class="form-control" asp-items="Model.PaintTypeList">
-                    <option value="">-- Select Paint Type --</option>
-                </select>
-                <span asp-validation-for="Paint.PaintTypeID" class="text-danger"></span>
-            </div>
+                <div class="mb-3">
+                    <label asp-for="Paint.PaintTypeID" class="form-label">Paint Type</label>
+                    <select asp-for="Paint.PaintTypeID" class="form-select" asp-items="Model.PaintTypeList">
+                        <option value="">Select Paint Type</option>
+                    </select>
+                    <span asp-validation-for="Paint.PaintTypeID" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="Paint.PaintQuantity" class="control-label">Quantity</label>
-                <input asp-for="Paint.PaintQuantity" class="form-control" type="number" min="0" value="0" />
-                <span asp-validation-for="Paint.PaintQuantity" class="text-danger"></span>
-            </div>
+                <div class="mb-3">
+                    <label asp-for="Paint.HexCode" class="form-label">Color (HEX)</label>
+                    <div class="input-group">
+                        <input asp-for="Paint.HexCode" type="color" class="form-control form-control-color" />
+                        <input asp-for="Paint.HexCode" type="text" class="form-control" pattern="^#[0-9A-Fa-f]{6}$" />
+                    </div>
+                    <span asp-validation-for="Paint.HexCode" class="text-danger"></span>
+                </div>
 
-            <div class="form-group mt-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
-                <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+                <div class="mb-3">
+                    <label asp-for="Paint.PaintQuantity" class="form-label">Quantity</label>
+                    <input asp-for="Paint.PaintQuantity" type="number" class="form-control" min="0" />
+                    <span asp-validation-for="Paint.PaintQuantity" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        // Sync color input with text input
+        document.querySelector('input[type="color"]').addEventListener('input', function(e) {
+            document.querySelector('input[type="text"]').value = e.target.value;
+        });
+        document.querySelector('input[type="text"]').addEventListener('input', function(e) {
+            document.querySelector('input[type="color"]').value = e.target.value;
+        });
+    </script>
 } 

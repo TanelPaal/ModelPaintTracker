@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Domain;
 using Services;
 using WebApp.Pages.Shared;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebApp.Pages.Models;
 
@@ -42,9 +42,9 @@ public class CreateModel : BasePageModel
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error retrieving data");
-            SetErrorMessage("Error retrieving data. Please try again.");
-            return Page();
+            _logger.LogError(ex, "Error loading create model page");
+            SetErrorMessage("Error loading page. Please try again.");
+            return RedirectToPage("./Index");
         }
     }
 
@@ -52,21 +52,18 @@ public class CreateModel : BasePageModel
     {
         if (!ModelState.IsValid)
         {
-            _logger.LogWarning("Model state is invalid");
             var factions = await _factionService.GetAllAsync();
             var states = await _stateService.GetAllAsync();
         
             FactionList = new SelectList(factions, "FactionID", "FactionName");
             StateList = new SelectList(states, "StateID", "StateName");
-        
+            
             return Page();
         }
 
         try
         {
-            // TODO: Set UserID from authentication when implemented
-            Model.UserID = 1; // Temporary default user
-            _logger.LogInformation("Creating model with ID: {ModelID}", Model.ModelID);
+            Model.UserID = 1; // TODO: Replace with actual user ID from authentication
             await _modelService.CreateAsync(Model);
             SetSuccessMessage("Model created successfully!");
             return RedirectToPage("./Index");
@@ -75,12 +72,13 @@ public class CreateModel : BasePageModel
         {
             _logger.LogError(ex, "Error creating model");
             SetErrorMessage("Error creating model. Please try again.");
+            
             var factions = await _factionService.GetAllAsync();
             var states = await _stateService.GetAllAsync();
         
             FactionList = new SelectList(factions, "FactionID", "FactionName");
             StateList = new SelectList(states, "StateID", "StateName");
-        
+            
             return Page();
         }
     }

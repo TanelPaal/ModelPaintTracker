@@ -28,7 +28,7 @@ public class IndexModel : BasePageModel
 
     public async Task OnGetAsync()
     {
-        Models = await _modelService.GetAllAsync();
+        Models = await _modelService.GetAllWithDetailsAsync();
         Factions = await _factionService.GetAllAsync();
         States = await _stateService.GetAllAsync();
     }

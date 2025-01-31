@@ -8,21 +8,38 @@
     <h1>Add Paint to @Model.Model.ModelName</h1>
 
     <form method="post">
-        <input type="hidden" asp-for="ModelPaint.ModelID" />
+        <input type="hidden" asp-for="ModelPaint.ModelID" value="@Model.Model.ModelID" />
         
         <div class="row">
             <div class="col-md-6">
                 <div class="mb-3">
                     <label asp-for="ModelPaint.PaintID" class="form-label">Paint</label>
-                    <select asp-for="ModelPaint.PaintID" class="form-select" asp-items="Model.PaintList">
+                    <select asp-for="ModelPaint.PaintID" class="form-select" asp-items="Model.PaintList" required>
                         <option value="">Select Paint</option>
                     </select>
                     <span asp-validation-for="ModelPaint.PaintID" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
-                    <a asp-page="Index" asp-route-modelId="@Model.Model.ModelID" class="btn btn-secondary">Back to List</a>
-                    <button type="submit" class="btn btn-primary">Add Paint</button>
+                    <label asp-for="ModelPaint.UsageType" class="form-label">Usage Type</label>
+                    <select asp-for="ModelPaint.UsageType" class="form-select" required>
+                        <option value="">Select Usage Type</option>
+                        <option value="Base">Base</option>
+                        <option value="Layer">Layer</option>
+                        <option value="Shade">Shade</option>
+                        <option value="Highlight">Highlight</option>
+                        <option value="Detail">Detail</option>
+                    </select>
+                    <span asp-validation-for="ModelPaint.UsageType" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <a asp-page="Index" asp-route-modelId="@Model.Model.ModelID" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Add Paint
+                    </button>
                 </div>
             </div>
         </div>

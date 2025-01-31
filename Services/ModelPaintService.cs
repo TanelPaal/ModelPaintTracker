@@ -9,12 +9,16 @@ public interface IModelPaintService : IBaseService<ModelPaint>
     Task<IEnumerable<ModelPaint>> GetByPaintIdAsync(int paintId);
     Task<bool> ExistsAsync(int modelId, int paintId);
     Task DeleteAsync(int modelId, int paintId);
+    Task<IEnumerable<ModelPaint>> GetByModelIdWithDetailsAsync(int modelId);
 }
 
 public class ModelPaintService : BaseService<ModelPaint>, IModelPaintService
 {
+    private readonly ApplicationDbContext _context;
+
     public ModelPaintService(ApplicationDbContext context) : base(context)
     {
+        _context = context;
     }
 
     public async Task<IEnumerable<ModelPaint>> GetByModelIdAsync(int modelId)
@@ -49,5 +53,16 @@ public class ModelPaintService : BaseService<ModelPaint>, IModelPaintService
             _context.ModelPaints.Remove(modelPaint);
             await _context.SaveChangesAsync();
         }
+    }
+
+    public async Task<IEnumerable<ModelPaint>> GetByModelIdWithDetailsAsync(int modelId)
+    {
+        return await _context.ModelPaints
+            .Include(mp => mp.Paint)
+                .ThenInclude(p => p!.Brand)
+            .Include(mp => mp.Paint)
+                .ThenInclude(p => p!.PaintType)
+            .Where(mp => mp.ModelID == modelId)
+            .ToListAsync();
     }
 }

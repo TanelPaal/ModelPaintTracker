@@ -9,7 +9,6 @@ public class DeleteModel : BasePageModel
 {
     private readonly IModelService _modelService;
 
-    [BindProperty]
     public Model Model { get; set; } = default!;
 
     public DeleteModel(
@@ -26,13 +25,13 @@ public class DeleteModel : BasePageModel
             return NotFound();
         }
 
-        var model = await _modelService.GetByIdAsync(id.Value);
-        if (model == null)
+        var miniature = await _modelService.GetByIdAsync(id.Value);
+        if (miniature == null)
         {
             return NotFound();
         }
 
-        Model = model;
+        Model = miniature;
         return Page();
     }
 
@@ -51,9 +50,9 @@ public class DeleteModel : BasePageModel
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error deleting model");
+            _logger.LogError(ex, "Error deleting model with ID: {Id}", id);
             SetErrorMessage("Error deleting model. Please try again.");
-            return Page();
+            return RedirectToPage("./Index");
         }
     }
 } 

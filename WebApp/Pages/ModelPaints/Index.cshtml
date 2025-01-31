@@ -5,31 +5,47 @@
 }
 
 <div class="container">
-    <h1>Paints for @Model.Model?.ModelName</h1>
-    <p>
-        @if (Model.Model?.Faction != null)
-        {
-            <strong>Faction:</strong> @Model.Model.Faction.FactionName
-        }
-        @if (Model.Model?.State != null)
-        {
-            <strong>State:</strong> @Model.Model.State.StateName
-        }
-    </p>
+    <div class="row mb-4">
+        <div class="col">
+            <h1>Paints for @Model.Model?.ModelName</h1>
+            <div class="model-details">
+                @if (Model.Model?.Faction != null)
+                {
+                    <span class="badge bg-primary me-2">@Model.Model.Faction.FactionName</span>
+                }
+                @if (Model.Model?.State != null)
+                {
+                    <span class="badge bg-secondary">@Model.Model.State.StateName</span>
+                }
+            </div>
+        </div>
+    </div>
 
-    <div class="mb-3">
-        <a asp-page="Create" asp-route-modelId="@Model.Model?.ModelID" class="btn btn-primary">Add Paint</a>
-        <a asp-page="/Models/Index" class="btn btn-secondary">Back to Models</a>
+    <div class="row mb-3">
+        <div class="col">
+            <a asp-page="Create" asp-route-modelId="@Model.Model?.ModelID" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Add Paint
+            </a>
+            <a asp-page="/Models/Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Models
+            </a>
+        </div>
     </div>
 
     @if (TempData["SuccessMessage"] != null)
     {
-        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     }
 
     @if (TempData["ErrorMessage"] != null)
     {
-        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     }
 
     <div class="table-responsive">
@@ -38,6 +54,7 @@
                 <tr>
                     <th>Paint Name</th>
                     <th>Brand</th>
+                    <th>Type</th>
                     <th>Color</th>
                     <th>Actions</th>
                 </tr>
@@ -48,15 +65,22 @@
                     <tr>
                         <td>@modelPaint.Paint?.PaintName</td>
                         <td>@modelPaint.Paint?.Brand?.BrandName</td>
+                        <td>@modelPaint.Paint?.PaintType?.TypeName</td>
                         <td>
                             <div class="d-flex align-items-center">
-                                <div style="width: 25px; height: 25px; background-color: @modelPaint.Paint?.HexCode; border: 1px solid #ddd; margin-right: 10px;"></div>
-                                @modelPaint.Paint?.HexCode
+                                <div class="color-swatch me-2" style="width: 25px; height: 25px; background-color: @modelPaint.Paint?.HexCode; border: 1px solid #ddd;"></div>
+                                <span>@modelPaint.Paint?.HexCode</span>
                             </div>
                         </td>
                         <td>
-                            <form method="post" asp-page="Delete" asp-route-modelId="@Model.Model?.ModelID" asp-route-paintId="@modelPaint.PaintID" class="d-inline">
-                                <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                            <form method="post" asp-page="Delete" 
+                                  asp-route-modelId="@Model.Model?.ModelID" 
+                                  asp-route-paintId="@modelPaint.Paint?.PaintID" 
+                                  onsubmit="return confirm('Are you sure you want to remove this paint?');" 
+                                  style="display: inline;">
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash"></i> Remove
+                                </button>
                             </form>
                         </td>
                     </tr>
@@ -64,4 +88,22 @@
             </tbody>
         </table>
     </div>
-</div> 
+
+    @if (!Model.ModelPaints.Any())
+    {
+        <div class="alert alert-info">
+            No paints have been added to this model yet.
+        </div>
+    }
+</div>
+
+@section Styles {
+    <style>
+        .model-details {
+            margin-top: 0.5rem;
+        }
+        .color-swatch {
+            border-radius: 4px;
+        }
+    </style>
+} 

@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Domain;
 using Services;
 using WebApp.Pages.Shared;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebApp.Pages.Models;
 
@@ -14,8 +14,6 @@ public class EditModel : BasePageModel
 
     [BindProperty]
     public Model Model { get; set; } = default!;
-    public IEnumerable<Faction> Factions { get; set; } = new List<Faction>();
-    public IEnumerable<State> States { get; set; } = new List<State>();
     public SelectList? FactionList { get; set; }
     public SelectList? StateList { get; set; }
 
@@ -37,31 +35,41 @@ public class EditModel : BasePageModel
             return NotFound();
         }
 
-        var model = await _modelService.GetByIdAsync(id.Value);
-        if (model == null)
+        var miniature = await _modelService.GetByIdAsync(id.Value);
+        if (miniature == null)
         {
             return NotFound();
         }
 
-        Model = model;
-        Factions = await _factionService.GetAllAsync();
-        States = await _stateService.GetAllAsync();
+        try
+        {
+            Model = miniature;
+            var factions = await _factionService.GetAllAsync();
+            var states = await _stateService.GetAllAsync();
         
-        var factions = await _factionService.GetAllAsync();
-        var states = await _stateService.GetAllAsync();
+            FactionList = new SelectList(factions, "FactionID", "FactionName");
+            StateList = new SelectList(states, "StateID", "StateName");
         
-        FactionList = new SelectList(factions, "FactionID", "FactionName");
-        StateList = new SelectList(states, "StateID", "StateName");
-        
-        return Page();
+            return Page();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error loading edit model page for ID: {Id}", id);
+            SetErrorMessage("Error loading page. Please try again.");
+            return RedirectToPage("./Index");
+        }
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
-            Factions = await _factionService.GetAllAsync();
-            States = await _stateService.GetAllAsync();
+            var factions = await _factionService.GetAllAsync();
+            var states = await _stateService.GetAllAsync();
+        
+            FactionList = new SelectList(factions, "FactionID", "FactionName");
+            StateList = new SelectList(states, "StateID", "StateName");
+            
             return Page();
         }
 
@@ -73,10 +81,15 @@ public class EditModel : BasePageModel
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error updating model");
+            _logger.LogError(ex, "Error updating model with ID: {Id}", Model.ModelID);
             SetErrorMessage("Error updating model. Please try again.");
-            Factions = await _factionService.GetAllAsync();
-            States = await _stateService.GetAllAsync();
+            
+            var factions = await _factionService.GetAllAsync();
+            var states = await _stateService.GetAllAsync();
+        
+            FactionList = new SelectList(factions, "FactionID", "FactionName");
+            StateList = new SelectList(states, "StateID", "StateName");
+            
             return Page();
         }
     }

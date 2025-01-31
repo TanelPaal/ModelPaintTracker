@@ -8,14 +8,14 @@ public class ModelPaint
     [Key]
     public int ModelPaintID { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Model is required")]
     public int ModelID { get; set; }
     public Model? Model { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Paint is required")]
     public int PaintID { get; set; }
     public Paint? Paint { get; set; }
 
-    [Required]
-    public string UsageType { get; set; } = string.Empty;
+    [Required(ErrorMessage = "Usage type is required")]
+    public string UsageType { get; set; } = default!;
 }

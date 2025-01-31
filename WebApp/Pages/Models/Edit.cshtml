@@ -29,12 +29,8 @@
 
                 <div class="mb-3">
                     <label asp-for="Model.StateID" class="form-label">State</label>
-                    <select asp-for="Model.StateID" class="form-select">
+                    <select asp-for="Model.StateID" class="form-select" asp-items="Model.StateList">
                         <option value="">Select State</option>
-                        @foreach (var state in Model.States)
-                        {
-                            <option value="@state.StateID">@state.StateName</option>
-                        }
                     </select>
                     <span asp-validation-for="Model.StateID" class="text-danger"></span>
                 </div>

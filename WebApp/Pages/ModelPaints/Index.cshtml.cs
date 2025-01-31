@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Domain;
 using Services;
 using WebApp.Pages.Shared;
@@ -33,15 +34,15 @@ public class IndexModel : BasePageModel
             return NotFound();
         }
 
-        var model = await _modelService.GetByIdAsync(modelId.Value);
+        var model = await _modelService.GetByIdWithDetailsAsync(modelId.Value);
         if (model == null)
         {
             return NotFound();
         }
 
         Model = model;
-        ModelPaints = await _modelPaintService.GetByModelIdAsync(modelId.Value);
-        AvailablePaints = await _paintService.GetAllAsync();
+        ModelPaints = await _modelPaintService.GetByModelIdWithDetailsAsync(modelId.Value);
+        AvailablePaints = await _paintService.GetAllWithDetailsAsync();
         
         return Page();
     }
