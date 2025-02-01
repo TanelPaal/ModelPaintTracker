@@ -47,20 +47,7 @@ The **Paint & Model Inventory Management System** is a **Razor Pages Web App** d
 
 ---
 
-## 5. Database Constraints
-### **Database Constraints for Data Integrity**
-- **Paints Table**
-  - `PaintQuantity` should have a `CHECK (PaintQuantity >= 0)` constraint.
-  - `HexCode` should be validated using a `CHECK (HexCode LIKE '#______')`.
-- **Models Table**
-  - `ModelQuantity` should have a `CHECK (ModelQuantity >= 0)` constraint.
-- **ModelPaints Table**
-  - `ModelID` and `PaintID` should have a **composite unique constraint**.
-  - `UsageType` should be constrained to predefined values ('Base Coat', 'Highlight', 'Wash').
-
----
-
-## 6. Project Workflow
+## 5. Project Workflow
 ### **Phase 1: Core Features**
 ✅ Define **Entity Models** for Paints, Models, Factions, etc.  
 ✅ Configure **Entity Framework Core** with SQLite.  
@@ -94,7 +81,7 @@ The **Paint & Model Inventory Management System** is a **Razor Pages Web App** d
 
 ---
 
-## 7. Razor Pages Implementation
+## 6. Razor Pages Implementation
 Each entity will have **CRUD Pages**:
 - **Paints**
   - `/Paints/Index.cshtml` → List all paints.
@@ -112,7 +99,7 @@ Each entity will have **CRUD Pages**:
 
 ---
 
-## 8. Next Steps
+## 7. Next Steps
 1️⃣ **Enhance Search & Filtering**
    - Add search by paint name/brand
    - Filter models by faction/state
