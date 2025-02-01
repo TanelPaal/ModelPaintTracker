@@ -78,6 +78,20 @@ The **Paint & Model Inventory Management System** is a **Razor Pages Web App** d
 🔹 **Export/Import**: JSON/CSV for data backup.  
 🔹 **Frontend Enhancements**: AJAX for paint assignment, improved UI.
 
+### **Phase 4: Mobile & Scanning Features**
+🔹 **Barcode Scanning**
+  - Implement paint barcode scanning via device camera
+  - Support multiple barcode formats (UPC, EAN, QR)
+  - Auto-populate paint details from scans
+  - Batch scanning for inventory updates
+
+🔹 **Progressive Web App (PWA)**
+  - Offline functionality
+  - Mobile-friendly interface
+  - Push notifications for low paint quantities
+  - Home screen installation
+  - Camera integration for barcode scanning
+
 ---
 
 ## 7. Razor Pages Implementation
@@ -108,10 +122,13 @@ Each entity will have **CRUD Pages**:
    - Add low quantity warnings
    - Track paint usage history
    - Batch update paint quantities
+   - Implement barcode scanning for quick paint lookup
 
 3️⃣ **UI/UX Improvements**
    - Add color swatches for paint selection
    - Add paint usage statistics dashboard
+   - Convert to PWA for mobile access
+   - Implement offline capabilities
 
 ---
 
